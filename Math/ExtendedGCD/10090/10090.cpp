@@ -22,33 +22,35 @@ int main()
 {
     ll n;
     ll x, y;
-    ll c1, c2, n1, n2;
+    ll c1, c2, a, b;
     while (~scanf("%lld", &n) && n)
     {
-        scanf("%lld %lld", &c1, &n1);
-        scanf("%lld %lld", &c2, &n2);
-        ll gcd = exgcd(n1, n2, x, y);
+        scanf("%lld %lld", &c1, &a);
+        scanf("%lld %lld", &c2, &b);
+        ll gcd = exgcd(a, b, x, y);
         if (n % gcd != 0)
         {
             printf("failed\n");
             continue;
         }
-        ll l = ceil((double)(-n) * x / n2);
-        ll r = floor((double)(n) * y / n1);
+        ll l = ceil((double)(-n) * x / b);
+        ll r = floor((double)(n) * y / a);
         if (l > r)
         {
             printf("failed\n");
             continue;
         }
-        if (c1 * n2 < c2 * n1) //斜率正or負
+        if (c1 * b < c2 * a) //斜率正or負
         {
-            x = n * x / gcd + n2 / gcd * r;
-            y = n * y / gcd - n1 / gcd * r;
+            //斜率負，帶入k的上界
+            x = n * x / gcd + b / gcd * r;
+            y = n * y / gcd - a / gcd * r;
         }
         else
         {
-            x = n * x / gcd + n2 / gcd * l;
-            y = n * y / gcd - n1 / gcd * l;
+            //斜率正，帶入k的下界
+            x = n * x / gcd + b / gcd * l;
+            y = n * y / gcd - a / gcd * l;
         }
         printf("%lld %lld\n", x, y);
     }
