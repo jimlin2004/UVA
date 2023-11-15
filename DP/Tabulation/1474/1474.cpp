@@ -54,7 +54,7 @@ void solve()
     //由後到前，利用currentShelter(目前第幾個shelter)，currentTeam(目前是第幾個team要找path)
     //currentShelter -= path[currentTeam][currentShelter] 實現維護currentShelter的效果
     //當currentShelter - 1時代表目前是第一個進入第currentShelter的team
-    //所以自第一個tema到第currentTeam - 1個team會是在前currentShelter - 1的shelter裡
+    //所以自第一個team到第currentTeam - 1個team會是在前currentShelter - 1的shelter裡
     int currentShelter = m;
     for (int currentTeam = n; currentTeam > 0 && currentShelter > 0; --currentTeam)
     {
