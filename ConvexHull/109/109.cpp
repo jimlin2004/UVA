@@ -71,14 +71,14 @@ public:
 
         for (const Item& item: pointsVec)
         {
+            int temp;
             while (this->convexHullPoints.size() >= 2 &&
-                (crossProduct(this->convexHullPoints[this->convexHullPoints.size() - 2], this->convexHullPoints[this->convexHullPoints.size() - 1], item.p) <= 0))
+                (crossProduct(this->convexHullPoints[this->convexHullPoints.size() - 1], item.p, this->convexHullPoints[this->convexHullPoints.size() - 2]) < 0))
             {
                 this->convexHullPoints.pop_back();
             }
             this->convexHullPoints.emplace_back(item.p);
         }
-        return;
     }
 
     bool contain(const Point& targetPoint)

@@ -3,12 +3,19 @@
 using namespace std;
 
 /*
-[l, r]中
-錯誤率為
-(prefixSum[r] - prefixSum[l - 1]) / (r - l + 1) <= p
-移向 => prefixSum[r] - prefixSum[l - 1]
+prefixSum[i]為1到i在strA與strB中相同位置DNA不一樣的總個數
+(概念類似prefixSum所以命名之)
 
-key[i] = i * p - 100 * prefixSum[i]
+[l, r]中錯誤率為
+(prefixSum[r] - prefixSum[l - 1]) / (r - l + 1) <= p / 100
+移向 => 100 * (prefixSum[r] - prefixSum[l - 1]) <= (r - l + 1) * p
+整理 => (l - 1) * p - 100 * prefixSum[l - 1] <= r * p - 100 * prefixSum[r]
+    ->位置l - 1              ->位置l - 1    ->位置r               ->位置r       
+
+設key[i] = i * p - 100 * prefixSum[i]
+上式即被簡化為key[l - 1] <= key[r] -(1)
+因為要找出長度最長的，所以算出key[r]後要去找滿足(1)式最左邊的l - 1
+此時總長度為r - l + 1 = r - (l - 1)
 */
 
 struct DNA
@@ -17,7 +24,7 @@ struct DNA
     int key;
 };
 
-//單調遞減隊列
+//單調遞減數列
 int monoSize;
 DNA monoDec[150005];
 
@@ -26,7 +33,7 @@ char strA[150005];
 char strB[150005];
 DNA DNAArray[150005];
 
-//透過二分搜在monoDec中找到在DNAArray中小於等於我最左邊的DNA
+//透過二分搜在monoDec(單調遞減數列)中找到在DNAArray中小於等於我最左邊的DNA
 int binarySearch(int key)
 {
     int l = 0, r = monoSize - 1;
