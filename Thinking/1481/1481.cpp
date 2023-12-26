@@ -56,7 +56,7 @@ int solve(int n)
         {
             l = min(l, v[a[j]]);
             r = max(r, v[a[j]]);
-            if (r - l == j - i)
+            if (r - l + 1 == j - i + 1)
                 ++res;
         }
     }
