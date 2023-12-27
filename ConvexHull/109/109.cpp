@@ -18,8 +18,8 @@ struct Point
 };
 
 //vec<OA> 與 vec<OB>的crossProduct
-//res > 0 -> 順時針
-//res < 0 -> 逆時針
+//res < 0 -> 順時針
+//res > 0 -> 逆時針
 //res = 0 -> 共線
 int crossProduct(const Point& O, const Point& A, const Point& B)
 {
