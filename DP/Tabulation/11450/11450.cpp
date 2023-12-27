@@ -3,7 +3,7 @@
 using namespace std;
 
 int M, C;
-//dp[i][j] -> 買到第j - 1種時剩i元
+//dp[i][j] -> 買到第j種品項時剩i元
 bool dp[205][25];
 int price[25][25];
 //price[i][0]是第i種品項有幾個
