@@ -4,22 +4,40 @@
 #include <cstring>
 using namespace std;
 
+/*
+經典題
+兩種做法:
+    一. 將partial order關係轉為DAG，問題變成找DAG最長路徑(Floyd-Warshall)
+    二. 利用Greedy與sort，將Box的每個邊長做sort(小到大)，將Boxes做排序(字典序，Greedy)
+        最後就只剩下用LIS找出最大的Box序列，再打印LIS即可
+    <注>因為此題只有partial order的大小關係，LIS用O(nlongn)不好做，我們不知道LIS尾巴留誰最好
+        所以要用O(n^2)的方式
+*/
+
 struct Box
 {
     int number;
     vector<int> dimensions;
+    //字典序
     bool operator < (const Box& other) const
     {
-        bool isLess = true;
         for (int i = 0; i < this->dimensions.size(); ++i)
         {
-            if (this->dimensions[i] >= other.dimensions[i])
-            {
-                isLess = false;
-                break;
-            }
+            if (this->dimensions[i] > other.dimensions[i])
+                return false;
+            if (this->dimensions[i] < other.dimensions[i])
+                return true;
         }
-        return isLess;
+        return true;
+    }
+    bool canContain (const Box& other) const
+    {
+        for (int i = 0; i < this->dimensions.size(); ++i)
+        {
+            if (this->dimensions[i] <= other.dimensions[i])
+                return false;
+        }
+        return true;
     }
 };
 
@@ -42,7 +60,7 @@ void printLIS(int index)
     if (index == -1)
         return;
     printLIS(path[index]);
-    printf("%d ", index);
+    printf("%d ", boxes[index].number);
 }
 
 int main()
@@ -81,9 +99,9 @@ int main()
         memset(path, -1, sizeof(path));
         for (int i = 0; i < boxN; ++i)
         {
-            for (int j = 0; j < boxN; ++j)
+            for (int j = 0; j < i; ++j)
             {
-                if (boxes[j] < boxes[i])
+                if (boxes[i].canContain(boxes[j]))
                 {
                     if (LIS[i] < LIS[j] + 1)
                     {
@@ -107,7 +125,7 @@ int main()
 
         printf("%d\n", maxLen);
         printLIS(path[LISTail]);
-        printf("%d\n", LISTail);
+        printf("%d\n", boxes[LISTail].number);
     }
     return 0;
 }
