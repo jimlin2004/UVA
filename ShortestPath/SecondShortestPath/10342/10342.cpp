@@ -17,6 +17,9 @@ using namespace std;
         注意最短路與次短路不能一樣長
 
     Note: 在想priority_queue的必要性，是否如spfa一樣用queue即可?
+
+    2024/03/07更新: 不用priority_queue, 用queue就行了(速度更快，pq要O(logn)維護heap)
+                    基本上從dijkstra變成用SPFA的思維
 */
 
 #define maxn 105
@@ -44,12 +47,13 @@ int dis[maxn][maxn][2];
 
 void dijkstra(int s)
 {
-    priority_queue<Item> pq;
-    pq.push({s, 0});
-    while (!pq.empty())
+    queue<Item> q;
+    // priority_queue<Item> pq;
+    q.push({s, 0});
+    while (!q.empty())
     {
-        Item curr = pq.top();
-        pq.pop();
+        Item curr = q.front();
+        q.pop();
 
         //如果s到u的最短路還沒出現過，就紀錄第一次遇到的路徑長
         if (dis[s][curr.u][0] == 0x3f3f3f3f)
@@ -65,7 +69,7 @@ void dijkstra(int s)
                 dis[s][curr.u][1] = dis[s][curr.u][0];
                 dis[s][curr.u][0] = curr.w;
             }
-            //最短路不變，便不用更新pq裡的內容(因為跟之前的一樣)
+            //最短路不變，且防止次短路與最短路變一樣而設置
             else if (dis[s][curr.u][0] == curr.w)
                 continue;
             //做到這邊時，不可能是更短的最短路
@@ -84,7 +88,7 @@ void dijkstra(int s)
         //把鄰接點都放進去pq看有沒有更好的答案
         for (const Edge& edge: G[curr.u])
         {
-            pq.push({edge.v, curr.w + edge.w});
+            q.push({edge.v, curr.w + edge.w});
         }
     }
 }
