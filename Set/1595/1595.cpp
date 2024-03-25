@@ -9,7 +9,7 @@ struct Point
     {
         if (this->x == other.x)
         {
-           return this->y < other.y;
+            return this->y < other.y;
         }
         return this->x < other.x;
     }
