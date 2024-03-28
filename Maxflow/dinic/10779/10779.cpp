@@ -74,18 +74,18 @@ int dfs(int u, int flow)
 {
     if (u == t)
         return flow;
-    int minFlow;
+    int outFlow;
     int totalFlow = 0;
-    for (int& v: adj[u])
+    for (int v: adj[u])
     {
         if ((d[v] == d[u] + 1) && (G[u][v].cap - G[u][v].flow > 0))
         {
-            if ((minFlow = dfs(v, min(flow, G[u][v].cap - G[u][v].flow))) > 0)
+            if ((outFlow = dfs(v, min(flow, G[u][v].cap - G[u][v].flow))) > 0)
             {
-                G[u][v].flow += minFlow;
-                G[v][u].flow -= minFlow;
-                flow -= minFlow;
-                totalFlow += minFlow;
+                G[u][v].flow += outFlow;
+                G[v][u].flow -= outFlow;
+                flow -= outFlow;
+                totalFlow += outFlow;
                 if (flow == 0)
                     break;
             }
