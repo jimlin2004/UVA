@@ -17,8 +17,8 @@ using namespace std;
         取d = min(dl, dr)
         左右兩邊的中線座標 midLine = (points[mid] + points[mid + 1] / 2)
         則橫跨中間的點只需要考慮
-        左半邊point.x > midLine + d
-        右半邊point.x < midLine - d
+        左半邊point.x > midLine - d
+        右半邊point.x < midLine + d
         也就是以midLine為中線，寬度為2d的長方形
         只有此長方形的點才有可能比原本的dl, dr小
     最後combine起來即為答案
