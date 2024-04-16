@@ -71,6 +71,7 @@ void solve(int n, int width)
             for (int p = 0; p < n; ++p)
             {
                 //不在當前的水平線區間內->忽略
+                //水平線上也忽略
                 if (points[p].y <= y[i] || y[j] <= points[p].y)
                     continue;
                 w = points[p].x - curX;

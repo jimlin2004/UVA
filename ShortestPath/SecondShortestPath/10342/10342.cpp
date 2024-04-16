@@ -10,7 +10,7 @@ using namespace std;
         一邊求最短路也一邊維護次短路
 
         同時因為可以回去繞圈，所以priority_queue中的Node(Item)裡的w並不是一般
-        的s到u點當前的最短路，而是一直繞圈(可能沒繞圈)累積出來的路徑長
+        的s到u點當前的cost，而是一直繞圈(可能沒繞圈)累積出來的路徑長(total cost)
 
         由於要繞圈，visited陣列就不需要了
 
@@ -31,7 +31,7 @@ struct Edge
 
 struct Item
 {
-    //w並不是一般的s到u點當前的最短路，而是一直繞圈(可能沒繞圈)累積出來的路徑長
+    //w並不是一般的s到u點當前的cost，而是一直繞圈(可能沒繞圈)累積出來的路徑長
     int u, w;
     bool operator < (const Item& other) const
     {
@@ -122,8 +122,9 @@ int main()
         while (q--)
         {
             scanf("%d %d", &u, &v);
-
-            //點不連接，就會是0x3f3f3f3f(無限大)
+            
+            //不存在次短路
+            //或點不連接，就會是0x3f3f3f3f(無限大)
             if (dis[u][v][1] == 0x3f3f3f3f)
                 puts("?");
             else

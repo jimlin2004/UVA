@@ -22,7 +22,7 @@ using namespace std;
     但題目說mat中的元素在[1, 20]之間
     但最大流必須要從0開始流
     所以做平移[1, 20] - 1到[0, 19]，相當於我們已經在mat的每個位置填上1
-    因此上面推倒的G中的cap要改
+    因此上面推導的G中的cap要改
 
     首先，s流到每個R node的cap變成(cap = Rsum - c)
     因為假設R node是1 -> 對應mat中的第1列，由於mat必須先填上1
@@ -50,6 +50,7 @@ struct Edge
 vector<Edge> edges;
 //存的是對應edges的index
 vector<vector<int>> G;
+//mat[i][j存的是對應edges[]的index，那條edge從i到j的flow + 1即為最後mat[i][j]的答案
 int mat[maxn][maxn];
 int d[maxn];
 bool visited[maxn];

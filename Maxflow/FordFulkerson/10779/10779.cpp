@@ -20,6 +20,7 @@ using namespace std;
         有沒有辦法越多種越好。
         其他朋友可以與Bob交換，但擁有的貼紙至少要留一張，
         否則沒理由要跟Bob換而犧牲自己
+        且朋友只會想多換一張新的，如果已經交換到了就不會再考慮換到一樣的
 
     剩下就是maxFlow問題
     在此用Ford-Fulkerson(主要是邊的cap不大，最大也就20，因為貼紙最多20種)
@@ -30,6 +31,7 @@ const int maxn = 10 + 25 + 5;
 int s, t;
 int n, m;
 bool visited[maxn];
+//G[u][v]存的是u到v這個edge的剩餘流量
 int G[maxn][maxn];
 //stickers[i][j] -> 第i位第j種sticker的數量(第0位是Bob)
 int stickers[15][30];

@@ -17,7 +17,7 @@ using namespace std;
         1. building i、k包含pos(也就是pos的x座標包含於building i、k的xmin、xmax)
         2. building i的深度比k深
         (以左下角的y判斷，至於原本考慮i的y + depth <= k的y在UVA能過，但在學校與老師輸出不一樣，所以先改成i的y < k的y)
-        3. building i的height >= building k的height
+        3. building i的height <= building k的height
     而i被誰擋住也是直接枚舉全部建築即可
 */
 
