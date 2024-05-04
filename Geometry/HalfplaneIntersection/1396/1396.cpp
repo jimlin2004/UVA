@@ -6,6 +6,8 @@ using namespace std;
 #define maxn 105
 
 /*
+    配合推導.png
+
     很複雜的幾何題
 
     題意: 找出一個點，使該點到外面的凸多邊形的距離最大，最後回傳距離即可(不用找點)
@@ -21,7 +23,7 @@ using namespace std;
     如果可以就代表答案可以在更大，否則就是mid太大了
     最後答案在 l
 
-    但在這裡還有很多幾何問題要實作
+    但在這裡還有幾何問題要實作
 
     1. 如何移動邊
     sol. 
@@ -32,8 +34,22 @@ using namespace std;
         很明顯(邊的單位法向量 * mid)即為邊要移動的方向
         由於參數式有直線的方向向量(v)，則該直線的法向量(n) 即為 n = (-v.y, v.x) <- 高中數學(xy交換加負號)
         最後只需將(邊的單位法向量 * mid) + (邊的p)即為移動後的邊的參數式
-    
+    2. 如何得到半平面交集
+    sol. 
+        需要維護一個單調佇列
+        半平面交集是一個凸多邊形，所以要維護半平面交集的類似凸包的邊
+        這裡半平面交集的邊是narrow[]中挑出來的，
+        將narrow[]的邊先以angle去由小到大排序(以保持逆時針選取邊)
+        並維護交集陣列，如果單調佇列有2個邊以上就會產生交點
+        如果上個交點是在當前的邊的右側，那上一條邊就不會是半平面交集的邊(參考"半平面說明1.png")
+        所以當前新的邊會影響單調佇列的尾端邊
+        還有一種狀況是快結束時，新的邊會對單調佇列的頭端邊有影響(見"半平面說明2.png")
+        這也是為什麼用單調佇列維護頭尾即可找出半平面交集
 
+        實際撰寫程式見下方
+    3. 兩參數式求交點
+    sol. 有公式(需推導)
+    4. 參數式與向量計算還有點都要實作
 */
 
 class Vector;
@@ -165,42 +181,61 @@ Point getIntersection(const Line& l1, const Line& l2)
     return l1.p + (l1.v * t);
 }
 
-//求narrow的半平面相交的多邊形邊數
+//求narrow的半平面相交的多邊形交數
 int halfplaneIntersection(int n)
 {
     //將narrow以angle去由小到大排列
     sort(narrow, narrow + n);
 
-    //queue
+    //單調佇列
     int first, last;
+    Line* q = new Line[n];
     //交點
     Point* intersections = new Point[n];
-    Line* q = new Line[n];
 
     q[first = last = 0] = narrow[0];
     for (int i = 1; i < n; ++i)
     {
+        //<注意> 要先檢查單調佇列尾端再檢查頭端，否則會使得搜尋時半平面可能變大(找的範圍不對)
+        //如果單調佇列中不只一條邊時，first != last，此時要檢查上個交點是否在新的邊的右側
+        //if true -> 單調佇列的尾端邊不是半平面交集的邊
         while (first < last && !onLeft(narrow[i], intersections[last - 1]))
             --last;
+        //快結束時，新的邊開始對單調佇列頭端邊有影響，所以也要檢查
         while (first < last && !onLeft(narrow[i], intersections[first]))
             ++first;
         
+        //將新的邊加入到單調佇列
         q[++last] = narrow[i];
+        //如果新的邊與上個邊共線(也就是向量平行且方向相同)
         if (fabs(Vector::getCrossProduct(q[last].v, q[last - 1].v)) < 1e-7)
         {
+            //捨棄新的邊
             --last;
+            //如果新的邊的點在最後一個邊的左邊，最後一個邊改為新的邊
+            //因為我們要求的是每個邊的左側半平面，所以只要保留更靠內的邊即可
+            //判斷方法就是如果新的邊的參數式中的點在最後一個邊的左側
+            //此時新的邊與其他邊約束起來的半平面交集會更小
+            //所以應當將最後一個邊換成新的邊
             if (onLeft(q[last], narrow[i].p))
                 q[last] = narrow[i];
-        }                                      
+        }
+        //求新的交點
         if (first < last)
             intersections[last - 1] = getIntersection(q[last - 1], q[last]);
     }
 
+    //最後要用單調佇列頭端的邊去檢查一下
+    //因為first的邊會被後面的邊約束，但尾端的邊不會
+    //到此邊們會形成一個環，我們可以用first去約束尾端的邊
+    //以此去除多餘的邊
     while (first < last && !onLeft(q[first], intersections[last - 1]))
         --last;
+    //last - first <= 1 -> 只有小於等於一個邊，不能形成凸多邊形，所以return 0
     if (last - first <= 1)
         return 0;
-    
+
+    //在這裡其實用不到，但為了邏輯完整而加上，求最後一個邊與第一的邊的交點
     intersections[last] = getIntersection(q[last], q[first]);
 
     delete[] intersections;
