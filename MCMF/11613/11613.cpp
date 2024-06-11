@@ -16,7 +16,7 @@ using namespace std;
     node 2, node 3 ...一路建下去
     
     然而這樣的有個主要的問題是
-    我沒辦法分辨出
+    沒辦法分辨出
     如month 1囤貨到month 2再由month 2銷售出去的量
     以及month 2製造且month 2當月即銷售的量
     這兩種量的意義，cost不同

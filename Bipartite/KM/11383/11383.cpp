@@ -7,7 +7,7 @@ using namespace std;
     給定一個W矩陣，現在分成row、column兩個1維陣列
     W[i][j]=k即代表column[i] + row[j]要>=k
     求row[] 與 column[]的所有值在滿足矩陣W的要求之下
-    row[] + column所有元素相加起來要最小
+    row[] + column[]所有元素相加起來要最小
 
     利用KM求二分圖最大權匹配
 
@@ -100,7 +100,7 @@ void KM()
             if (match(i))
                 break;
             else
-                update();
+                update(); //去調整vertex labeling以增加擴增路徑
         }
     }
 }

@@ -25,9 +25,18 @@ using namespace std;
     node.w代表縮完點後該縮點的weight，
     因此對於縮點時的維護為(node u 與 parent p 縮點成p):
     p.w += u.w; //u的weight被p合併
-    //有待討論
+    //有待討論(1)
     p.c += p.t * u.w + u.c; //將u塗完色，併入到p的cost
     p.t += u.t; //u的時間與p合併
+
+    //試著推出討論(1) <- 還沒推出來
+    假設一開始要做p時的timer = T
+    所以做完p的totalCost += T * p.c
+    接著做u，此時timer = T + 1
+    所以做完u的totalCost += (T + 1) * u.c
+    =>  意義等同於totalCost += T * p.c + (T + 1) * u.c
+    =>  把u、p看作同一個點p -> T * p.c' = T * p.c + (T + 1) * u.c
+    =>  p.c' = p.c + u.c + (u.c) / T
 */
 
 #define maxn 1005

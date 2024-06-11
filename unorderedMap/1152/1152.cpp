@@ -3,11 +3,11 @@
 using namespace std;
 
 /*
-基本上很簡單
-就分兩邊
-A[i] + B[j]記錄在unordered_map<sum, count>中
-在枚舉-1 * (C[k] + D[z])有沒有在unorder_map中
-加起來即可
+    基本上很簡單
+    就分兩邊
+    A[i] + B[j]記錄在unordered_map<sum, count>中
+    在枚舉-1 * (C[k] + D[z])有沒有在unorder_map中
+    加起來即可
 */
 
 #define maxn 4005

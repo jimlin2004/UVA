@@ -11,7 +11,7 @@ using namespace std;
     每個工作segment -> [l, r]
 
     注意: 底下的放在左邊是對的原因
-        deadline升續，start也升序，所以一定放得下
+        deadline升序，start也升序，所以一定放得下
         因為我們先將segment先右再左拿，所以如果連續拿到r相同的工作，s1.l 一定 <= s2.l
         此時currR的左邊一定夠
         因為題目不會給非法的input

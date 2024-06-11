@@ -26,7 +26,7 @@ int main()
         {
             string s1 = s.substr(0, i);
             string s2 = s.substr(i, s.size() - i);
-            if ((mp.find(s.substr(0, i)) != mp.end()) && (mp.find(s.substr(i, s.size() - i)) != mp.end()))
+            if ((mp.find(s1) != mp.end()) && (mp.find(s2) != mp.end()))
             {
                 cout << s << '\n';
                 break;
