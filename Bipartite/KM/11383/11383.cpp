@@ -15,7 +15,7 @@ using namespace std;
     Ly -> vertex labeling of y
     一開始Lx[i] = max(W[i][j]), Ly = 0
     Lx[i] + Ly[j] >= W[i][j]
-    要最小化sumOf(Lx[i] + Ly[j])
+    要最小化全部的(Lx[i] + Ly[j])加總
     不斷的調整vertex labeling去找到一條交錯邊皆滿足Lx[i] + Ly[j] == W[i][j]的增廣路
     最後會得到正確的二分圖完美匹配中的最大權分配(先滿足最多匹配，再滿足最大權)
 
@@ -54,10 +54,10 @@ bool match(int i)
 }
 
 // 修改二分圖上的交錯路徑上點的權重
+// 此舉是在通過調整vertex labeling看看能不能產生出新的增廣路(KM的增廣路要求Lx[i] + Ly[j] == W[i][j])
+// 在這裡優先從最小的diff調調看，才能保證最大權重匹配
 void update()
 {
-    // 改多少
-    // 差比較小 -> 增加比較多流量
     int diff = 0x3f3f3f3f;
 
     for (int i = 0; i < n; ++i)
@@ -100,7 +100,7 @@ void KM()
             if (match(i))
                 break;
             else
-                update(); //去調整vertex labeling以增加擴增路徑
+                update(); //去調整vertex labeling以增加增廣路徑
         }
     }
 }

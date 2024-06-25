@@ -18,6 +18,8 @@ using namespace std;
     greedy比較時利用node.w / node.t選最大代表應優先被做完的去縮點(點集合)
     node.w / node.t即代表每單位時間在那些點上的單位weight
     不斷做下去最後縮點到剩下root，root.c即是答案
+
+    //注意: 在這裡的cost已經不是題目中單純指一個node的cost，而是已經計算完timer * node.cost的累計
     
     縮點其實就是將node與parent集合成一個點，
     node.c代表原本做完那些點的總cost，
@@ -29,14 +31,9 @@ using namespace std;
     p.c += p.t * u.w + u.c; //將u塗完色，併入到p的cost
     p.t += u.t; //u的時間與p合併
 
-    //試著推出討論(1) <- 還沒推出來
-    假設一開始要做p時的timer = T
-    所以做完p的totalCost += T * p.c
-    接著做u，此時timer = T + 1
-    所以做完u的totalCost += (T + 1) * u.c
-    =>  意義等同於totalCost += T * p.c + (T + 1) * u.c
-    =>  把u、p看作同一個點p -> T * p.c' = T * p.c + (T + 1) * u.c
-    =>  p.c' = p.c + u.c + (u.c) / T
+    //討論(1):
+        為什麼是p.t * u.w是因為u.w對應的是原本那整個可能經過縮點後的總cost(未成上timer)
+        最後p.c += u.c意義就是把u之前算完的總cost傳遞給parent繼續計算
 */
 
 #define maxn 1005
@@ -68,11 +65,11 @@ int main()
             parent[v] = u;
         }
 
-        //O(n)找node.w / node.t最大的點
         for (int i = 1; i < n; ++i)
         {
             int k = -1;
             double maxW = -1;
+            //O(n)找node.w / node.t最大的點
             for (int j = 1; j <= n; ++j)
             {
                 if (j != root && existed[j])
@@ -85,6 +82,8 @@ int main()
                 }
             }
 
+            //k被縮進parent[k]，
+            //所以k的children全部改為parent[k]的children
             for (int j = 1; j <= n; ++j)
             {
                 if (parent[j] == k)

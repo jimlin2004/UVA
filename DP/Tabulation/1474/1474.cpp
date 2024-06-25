@@ -23,6 +23,17 @@ int n, m;
 
 const long long INF = 0x3f3f3f3f3f3f3f3f;
 
+/*
+    dp轉移式:
+        由於最後一個隊伍永遠去最後一個避難所會是最好的
+        所以dp[i][j]: 只考慮前i個隊伍及前j隊時最小距離總和
+        因此dp[i][j] = min(dp[i - 1][j - 1], dp[i - 1][j]) + abs(teams[i].location - shelters[j].location)
+        其中dp[i - 1][j - 1]: 不包含隊伍i(前i - 1個隊伍)只考慮前j - 1所避難所的最小
+        dp[i - 1][j]: 不包含隊伍i(前i - 1個隊伍)只考慮前j所避難所的最小
+
+        由於dp[i]只與dp[i - 1]有關，所以可以進一步空間壓縮
+*/
+
 void solve()
 {
     memset(dp, 0x3f, sizeof(dp));
