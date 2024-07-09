@@ -73,7 +73,7 @@ public:
         {
             int temp;
             while (this->convexHullPoints.size() >= 2 &&
-                (crossProduct(this->convexHullPoints[this->convexHullPoints.size() - 1], item.p, this->convexHullPoints[this->convexHullPoints.size() - 2]) < 0))
+                (crossProduct(this->convexHullPoints[this->convexHullPoints.size() - 2], this->convexHullPoints[this->convexHullPoints.size() - 1], item.p) < 0))
             {
                 this->convexHullPoints.pop_back();
             }
