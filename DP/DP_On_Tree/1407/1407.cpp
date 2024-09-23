@@ -27,11 +27,11 @@ struct Edge
     
     轉移式分
     (以下v泛指u的child，w指的是u -> v的距離)
-    case 1. 
+    case 1. (看推導1.png，即去v以外的子樹後再繞到v子樹最後回到u)
         dp[u][j][1] = min(dp[u][j][1], dp[u][j - k][1] + dp[v][k][1] + 2w)
-    case 2.
+    case 2. (看推導2.png，即去v以外的子樹後再繞到v子樹最後不回到u)
         dp[u][j][0] = min(dp[u][j][0], dp[u][j - k][1] + dp[v][k][0] + w)
-    case 3.
+    case 3. (看推導3.png，即去v子樹後再回到u繞到v子樹以外的子樹最後不回到u)
         dp[u][j][0] = min(dp[u][j][0], dp[u][j - k][0] + dp[v][k][1] + 2w)
 */
 int dp[maxn][maxn][2];
@@ -53,14 +53,17 @@ void dfs(int u, int p)
         subtreeSize[u] += subtreeSize[edge.v];
     }
 
-    //這兩個是邊界條件
+    //這兩個是邊界條件，雖然有點奇怪
+    //dp[u][1][1] = 0可以解釋為一直在u，沒有離開過
+    //但dp[u][1][0]只能強硬解釋為要做出"離開u"的動作才算是沒有回到u
+    //所以一樣算成0
     dp[u][1][0] = dp[u][1][1] = 0;
     
     for (const Edge& edge: G[u])
     {
         if (edge.v == p)
             continue;
-        // 這裡倒著做的理由跟背包問題是一樣的
+        // 這裡倒著做的理由跟背包問題是一樣的，dp[u][j][]會被dp[u][j - k][]影響答案
         for (int j = subtreeSize[u]; j > 1; --j)
         {
             for (int k = 1; k < j && k <= subtreeSize[edge.v]; ++k)
