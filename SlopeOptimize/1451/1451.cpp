@@ -3,6 +3,7 @@
 using namespace std;
 
 #define maxn 100005
+// #define maxn 1005
 
 /*
     這題一開始看到可能以為是滑動窗戶之類的算法
@@ -13,7 +14,7 @@ using namespace std;
     如何轉為斜率問題，看推導1.png
     利用prefix sum可以找區間中共有幾個1
     則答案要的比例最大就是找出
-    x軸為區間長度
+    x軸為區間長度(點的個數，所以下面計算時是b - a + 1)
     y軸為1的個數
     那(y / x)其實就是斜率
     因此答案就是找斜率最大的區間
@@ -42,12 +43,13 @@ using namespace std;
 char DNA[maxn];
 //1的個數的prefix sum
 int prefixSum[maxn];
-//計算時用的queue，存的是可能可以作為起點的座標x
+//計算時用的queue，存的是可能可以作為答案區間左端點的座標x
 int q[maxn];
 
 //檢查是否為下凸點
 inline int isConvex(int x1, int x2, int x3, int x4)
 {
+    //(x4 - x3 + 1)是因為要的是x3 ~ x4有幾個點個數，不是區間長度
     return (prefixSum[x2] - prefixSum[x1 - 1]) * (x4 - x3 + 1) - (prefixSum[x4] - prefixSum[x3 - 1]) * (x2 - x1 + 1);
 }
 
