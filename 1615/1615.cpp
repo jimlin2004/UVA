@@ -47,7 +47,7 @@ int main()
             // (a, b)是村莊的位置，也就是圓心
             long long a, b;
             cin >> a >> b;
-            // sqrt(D * D - b * b)是用圓方程式與高速公路(y = 0)去解聯立解出來的
+            // a +- sqrt(D * D - b * b)是用圓方程式與高速公路(y = 0)去解聯立解出來的
             // 另外這題的數字畫成整數，不需要小數點
             long long x1 = a - (long long)sqrt(D * D - b * b);
             long long x2 = a + (long long)sqrt(D * D - b * b);

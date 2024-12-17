@@ -67,7 +67,7 @@ int main()
                 points[m++].k = 1;
                 points[m].radians = l;
                 points[m++].k = -1;
-                // [r, PI交給後面的程式]
+                // [r, PI]交給後面的程式
                 l = r;
                 r = PI;
             }

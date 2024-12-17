@@ -47,7 +47,6 @@ bool match(int u)
                 return true;
             }
         }
-        
     }
     return false;
 }

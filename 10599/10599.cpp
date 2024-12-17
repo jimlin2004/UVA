@@ -107,7 +107,7 @@ int main()
         if (needToRemoveLast == 0) // 原本在最後一格有垃圾
             printPath(len - 1);
         else
-            printPath(path[len - 1]); // 不要印出垃圾
+            printPath(path[len - 1]); // 最後一格沒有垃圾，不要印出最後一格
         puts("");
     }
     return 0;
