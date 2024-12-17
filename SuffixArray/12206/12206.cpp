@@ -26,8 +26,10 @@ void countingSort(int k)
 {
     memset(cnt, 0, sizeof(cnt));
     //counting sort第一步
-    //i + k代表超出字串長度，在概念上當作字典序最小
-    //至於為什麼這裡用i下面卻用SA[i]，其實SA[i]與i的值域都一樣，且都唯一不重複，所以用i去算就行了
+    //i + k >= n代表超出字串長度，在概念上當作字典序最小
+    //至於為什麼這裡用i下面卻用SA[i]，
+    //是因為其實SA[i]與i的值域都一樣，且都唯一不重複，所以用i去算就行了
+    //所以也可以將for裡的i改用SA[i]
     for (int i = 0; i < n; ++i)
         ++cnt[(i + k < n) ? Rank[i + k] : 0];
     
@@ -48,6 +50,7 @@ void countingSort(int k)
     //     cnt[i] = prefixSum;
     //     prefixSum += temp;
     // }
+    //<----我改一下的版本---->
     for (int i = 1; i < maxIndex; ++i)
     {
         cnt[i] += cnt[i - 1];

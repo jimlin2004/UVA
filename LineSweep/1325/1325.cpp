@@ -6,7 +6,7 @@ using namespace std;
 
 /*
     這題只有一個問題
-    因為答案一定是兩兩點連線的一個邊長
+    因為答案一定是兩兩點連線的一個邊長(觀察就知道)
     但若是枚舉所有的邊長下去搜一遍最大的答案會超時
 
     這題要換個想法
@@ -124,10 +124,12 @@ int main()
                 resD = currD;
                 resR = edges[k].dis;
             }
-            else if (currD == resD && resR > edges[k].dis)
-            {
-                resR = edges[k].dis;
-            }
+            // else if (currD == resD && resR > edges[k].dis) 
+            // {
+                // 不穩定星球數一樣時，選長度最短的，但因為排序過了，
+                // 所以第一次找到的答案一定是最短的，所以不需要
+                // resR = edges[k].dis;
+            // }
         }
 
         printf("%d\n", resD);

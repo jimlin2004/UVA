@@ -3,6 +3,9 @@
 using namespace std;
 #define ll long long
 
+// 題解至
+// https://jimlin2004.github.io/NotesViewer/Viewer.html?path=Notes-ExtendGCD-ExtendGCD
+
 ll exgcd(ll a, ll b, ll& x, ll& y)
 {
     if (b == 0)
