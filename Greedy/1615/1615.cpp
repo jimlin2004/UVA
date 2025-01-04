@@ -48,7 +48,7 @@ int main()
             long long a, b;
             cin >> a >> b;
             // a +- sqrt(D * D - b * b)是用圓方程式與高速公路(y = 0)去解聯立解出來的
-            // 另外這題的數字畫成整數，不需要小數點
+            // 另外這題的數字化成整數，不需要小數點
             long long x1 = a - (long long)sqrt(D * D - b * b);
             long long x2 = a + (long long)sqrt(D * D - b * b);
             // 注意不要超出去高速公路的範圍
@@ -57,7 +57,7 @@ int main()
         sort(segments.begin(), segments.end());
         long long curr = segments[0].to;
         int res = 1;
-        for (Segment segment: segments)
+        for (Segment& segment: segments)
         {
             if (curr < segment.from)
             {

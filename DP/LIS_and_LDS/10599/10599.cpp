@@ -9,7 +9,7 @@ using namespace std;
 /*
     這題就是LIS
     在可以接上去的垃圾中選長度最長的
-    LIS需要
+    LIS需要O(n ^ 2)
 */
 
 struct Garbage
