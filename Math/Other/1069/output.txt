@@ -1,0 +1,9 @@
+Case 1: Always an integer
+Case 2: Always an integer
+Case 3: Not always an integer
+Case 4: Not always an integer
+Case 5: Always an integer
+Case 6: Not always an integer
+Case 7: Always an integer
+Case 8: Not always an integer
+Case 9: Always an integer
