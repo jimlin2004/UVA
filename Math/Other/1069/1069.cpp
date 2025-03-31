@@ -81,6 +81,7 @@ void parse()
             if (state == 1 && k == 0) k = 1; // 可能沒有指數
             maxk = max(maxk, k);
             poly[m++] = {sign * c, k};
+            // 下一次的term繼續處理
             c = 0;
             k = 0;
             state = 0;

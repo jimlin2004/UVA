@@ -43,7 +43,7 @@ bool check(double len)
     for (int i = 0; i < n; ++i)
     {
         if (pos < segments[i].l)
-                pos = segments[i].l;
+            pos = segments[i].l;
         if (pos + len > segments[i].r)
             return false;
         pos += len;
