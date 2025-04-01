@@ -114,7 +114,7 @@ int main()
                 --state[edges[k].j];
             }
             
-            //當現在的邊與下個邊長度一樣就代表還沒搜完當前搜尋的答案邊長
+            //當現在的邊與下一個邊長度一樣就代表還沒搜完當前搜尋的答案邊長
             if (k != edges.size() - 1 && fabs(edges[k].dis - edges[k + 1].dis) < eps)
                 continue;
 

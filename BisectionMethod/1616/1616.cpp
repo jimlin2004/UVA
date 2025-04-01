@@ -36,7 +36,7 @@ struct Segment
 Segment segments[maxn];
 int n;
 
-// 基本線性掃描len能不能分
+// 基本線性掃描len能不能分完
 bool check(double len)
 {
     double pos = 0;

@@ -54,7 +54,7 @@ int main()
         // 記錄過程
         vector<pair<int, int>> history;
 
-        // 目標，每次讓i就定位
+        // 目標: 每次讓i就定位
         for (int i = 1; i <= n; ++i)
         {
             int pos; // 現在i在哪裡

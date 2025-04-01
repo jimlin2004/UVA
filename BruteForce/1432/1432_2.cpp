@@ -21,7 +21,7 @@ Point points[maxn];
 int n, k;
 
 // 用來記得哪些點能夠被覆蓋
-Point covered[maxn];
+Point covered[2 * maxn];
 
 double solve()
 {
@@ -33,7 +33,7 @@ double solve()
     sort(points, points + n, [=](const Point& a, const Point& b) {
         return a.radian < b.radian;
     });
-    
+
     // 用來記哪些半徑搜過了
     unordered_map<double, bool> vis;
 
@@ -71,13 +71,15 @@ double solve()
         if (m < k)
             continue;
         
-        // 數學上的逆向旋轉搜一次
-        // 注意只需要從 0 ~ k - 2 開始搜，是因為k - 1開始會在正向旋轉的時候搜過了
-        // 這裡是處理循環陣列的index問題，也能直接開成兩倍長的陣列
-        for (int j = 0; j < k - 1; ++j)
+        // 複製成兩倍陣列，處理循環陣列問題
+        for (int j = 0; j < m; ++j)
+            covered[j + m] = covered[j];
+        
+        // 處理循環陣列問題
+        for (int j = m; j < m + k; ++j)
         {
             // 注意這裡的角度相減是負的，需要加上2pi
-            minRadian = min(minRadian, covered[j].radian - covered[m - k + j + 1].radian + 2 * PI);
+            minRadian = min(minRadian, covered[j].radian - covered[j - k + 1].radian + 2 * PI);
         }
 
         res = min(res, (minRadian / 2) * currR * currR);
