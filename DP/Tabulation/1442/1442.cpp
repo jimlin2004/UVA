@@ -2,13 +2,14 @@
 using namespace std;
 
 // 可參考leetcode 42
+// 也能用另一種填油的想法(換湯不換藥)
 
 #define maxn 1000005
 
 int ceilings[maxn];
 int floors[maxn];
 
-// 左邊與右邊最高高度
+// 左邊與右邊(都包含)算過來能填充的最高高度
 int maxHL[maxn];
 int maxHR[maxn];
 

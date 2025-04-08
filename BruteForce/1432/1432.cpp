@@ -30,7 +30,7 @@ double solve()
         return 0;
 
     // 依照角度由小到大排序
-    sort(points, points + n, [=](const Point& a, const Point& b) {
+    sort(points, points + n, [](const Point& a, const Point& b) {
         return a.radian < b.radian;
     });
     
@@ -76,7 +76,7 @@ double solve()
         // 這裡是處理循環陣列的index問題，也能直接開成兩倍長的陣列
         for (int j = 0; j < k - 1; ++j)
         {
-            // 注意這裡的角度相減是負的，需要加上2pi
+            // 注意由於程式可讀性考量，這裡用的角度相減是負的，需要加上2pi
             minRadian = min(minRadian, covered[j].radian - covered[m - k + j + 1].radian + 2 * PI);
         }
 
@@ -110,7 +110,7 @@ int main()
         }
 
         // 依照半徑由小到大排序
-        sort(points, points + n, [=](const Point& a, const Point& b) {
+        sort(points, points + n, [](const Point& a, const Point& b) {
             return a.radius < b.radius;
         });
 
