@@ -30,23 +30,16 @@ int main()
         for (int i = 1; i <= n; ++i)
             scanf("%d", &ceilings[i]);
 
-        // 找到最高的地板
-        int maxF = 0;
-        for (int i = 1; i <= n; ++i)
-            maxF = max(maxF, floors[i]);
         
-        // 將左右兩邊的界線設為最高地板
-        floors[0] = maxF;
-        floors[n + 1] = maxF;
-        
-        maxHL[0] = maxF;
+        // 將左右兩邊的界線設為邊界的天花板高度
+        maxHL[0] = ceilings[1];
         // 紀錄i的左邊最大(包含)
         for (int i = 1; i <= n; ++i)
         {
             maxHL[i] = min(max(maxHL[i - 1], floors[i]), ceilings[i]);
         }
 
-        maxHR[n + 1] = maxF;
+        maxHR[n + 1] = ceilings[n];
         // 紀錄i的右邊最大(包含)
         for (int i = n; i >= 1; --i)
         {
