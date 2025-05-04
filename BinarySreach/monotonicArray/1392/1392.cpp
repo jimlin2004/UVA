@@ -8,7 +8,7 @@ prefixSum[i]為1到i在strA與strB中相同位置DNA不一樣的總個數
 
 [l, r]中錯誤率為
 (prefixSum[r] - prefixSum[l - 1]) / (r - l + 1) <= p / 100
-移向 => 100 * (prefixSum[r] - prefixSum[l - 1]) <= (r - l + 1) * p
+移項 => 100 * (prefixSum[r] - prefixSum[l - 1]) <= (r - l + 1) * p
 整理 => (l - 1) * p - 100 * prefixSum[l - 1] <= r * p - 100 * prefixSum[r]
     ->位置l - 1              ->位置l - 1    ->位置r               ->位置r       
 
