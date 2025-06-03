@@ -162,14 +162,14 @@ bool dp(int u, int parent)
         這裡有一個很重要的優化
         在求f[u]時目標是讓ff + bb <= maxUndirLen的條件之下ff最小
         其中ff是子樹中forward最長鏈
-        bb式子樹中backward最長鏈
+        bb是子樹中backward最長鏈
         首先我們將f由小到大排序
-        假定我們將f前k小的邊定向為forward
-        此時最好"順便"將f前k小的邊都變成forward
-        是因為前k - 1個邊的f都比第k個邊小，
-        所以此時枚舉的f不會變成，而b可能會變小
-        所以只要枚舉一遍k找到第k + 1 ~ n個邊裡最大的b
-        求f + b + 1是否能夠 <= maxUndirLen即可，O(n)
+        假定我們將f第k小的邊定向為forward
+        此時最好"順便"將f前k小的邊全部變成forward
+        是因為前k - 1個邊的f全都比第k個邊小，
+        所以此時枚舉的ff不會變大，而bb可能會變小
+        因此只要枚舉一遍k找到第k + 1 ~ n個邊裡最大的bb
+        求ff + bb + 1是否能夠 <= maxUndirLen即可，O(n)
         
         求b[u]時過程一樣，對b做排序，枚舉k即可，O(n)
     */
@@ -187,11 +187,11 @@ bool dp(int u, int parent)
     
     for (int k = 0; k <= m; ++k) // 枚舉k
     {
-        int ff = currF, bb = currB;
+        int ff = currF, bb = currB; // 繼承自有向邊的最大ff與bb，因為他們可能原本就是最長的
         if (k > 0)
-            ff = max(ff, undirChildren[k - 1].f + 1);
+            ff = max(ff, undirChildren[k - 1].f + 1); // 前k個邊都定向為forward
         if (k < m)
-            bb = max(bb, maxRightB[k] + 1);
+            bb = max(bb, maxRightB[k] + 1); // 找第k + 1 ~ n裡最大的bb
         
         if (ff + bb <= maxUndirLen)
             f[u] = min(f[u], ff); // 最長鏈裡的最小值
@@ -211,9 +211,9 @@ bool dp(int u, int parent)
     {
         int ff = currF, bb = currB;
         if (k > 0)
-            bb = max(bb, undirChildren[k - 1].b + 1);
+            bb = max(bb, undirChildren[k - 1].b + 1);  // 前k個邊都定向為backward
         if (k < m)
-            ff = max(ff, maxRightF[k] + 1);
+            ff = max(ff, maxRightF[k] + 1); // 找第k + 1 ~ n裡最大的ff
         
         if (ff + bb <= maxUndirLen)
             b[u] = min(b[u], bb); // 最長鏈裡的最小值

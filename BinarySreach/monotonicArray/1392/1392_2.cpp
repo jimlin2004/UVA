@@ -12,7 +12,7 @@ prefix[i]為1到i在strA與strB中相同位置DNA不一樣的總個數
 移項 => 100 * prefix[l - 1] - p * (l - 1) >= 100 * prefix[r] - p * r
 
 設f(i) = 100 * prefix[i] - p * i
-上式即被簡化為f(l - 1) => f(r)
+上式即被簡化為f(l - 1) >= f(r)
 
 要求l ~ r越長越好
 所以用二分法找到最長的距離
@@ -34,9 +34,11 @@ int n, p;
 
 bool check(int len)
 {
+    // 枚舉右端點，也就是f[r]
     for (int i = len; i <= n; ++i)
     {
-        if (f[i] <= fm[i - len])
+        // 當fm[i - len]的左邊(包含自己)有人可以滿足錯誤率的判斷式，代表此長度以上(包含)可以找到滿足錯誤率的區間，就能繼續二分往上搜搜看
+        if (f[i] <= fm[i - len]) 
             return true;
     }
     return false;

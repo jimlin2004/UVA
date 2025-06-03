@@ -80,7 +80,7 @@ int main()
             dp[i] = f(dq.front()) + prefixDis[i] + d2o[i];
 
             // 如果 dq 的 back 的 f() 比 i 的 f() 大，那就不用保留了，因為 i 的 f() 更好
-            while (!dq.empty() && (i <= n) && (f(dq.back()) >= f(i)))
+            while (!dq.empty() && (i < n) && (f(dq.back()) >= f(i)))
                 dq.pop_back();
             
             dq.push_back(i);

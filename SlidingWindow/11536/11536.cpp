@@ -54,14 +54,14 @@ int main()
             while ((found == k) && (l <= r)) // 涵蓋1 ~ k了
             {
                 res = min(res, r - l + 1);
-                if (1 <= arr[l] && arr[l] <= k && cnt[arr[l]] == 1)
+                if (1 <= arr[l] && arr[l] <= k && cnt[arr[l]] == 1) // 不能再縮了，再縮會不能涵蓋1 ~ k
                 {
                     break;
                 }
                 --cnt[arr[l]];
                 ++l;
             }
-            ++r;
+            ++r; // 不斷向右拓展
         }
 
         printf("Case %d: ", ++Case);
