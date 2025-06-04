@@ -63,7 +63,7 @@ long long solve(int l, int r)
         res = max(res, gain - solve(l, m - 1));
     }
 
-    return dp[l][r]= res;
+    return dp[l][r] = res;
 }
 
 
