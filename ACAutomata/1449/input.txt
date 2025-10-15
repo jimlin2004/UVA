@@ -1,0 +1,12 @@
+5
+a
+aa
+aaa
+b
+c
+aaaaaaaaaaa
+2
+aa
+bb
+ccccccc
+0

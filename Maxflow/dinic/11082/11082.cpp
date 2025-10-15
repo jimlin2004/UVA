@@ -50,7 +50,7 @@ struct Edge
 vector<Edge> edges;
 //存的是對應edges的index
 vector<vector<int>> G;
-//mat[i][j存的是對應edges[]的index，那條edge從i到j的flow + 1即為最後mat[i][j]的答案
+//mat[i][j]存的是對應edges[]的index，那條edge從i到j的flow + 1即為最後mat[i][j]的答案
 int mat[maxn][maxn];
 int d[maxn];
 bool visited[maxn];
