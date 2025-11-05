@@ -42,7 +42,7 @@ int pos[MAXN]; // pos[index] -> index是電影編號，pos[index]是電影現在
 
 void add(int index, int val)
 {
-    while (index <= 2 * MAXN)
+    while (index < 2 * MAXN)
     {
         BIT[index] += val;
         index += lowbit(index);

@@ -1,6 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// AC自動機 + dp算機率
+
 const int sigmaSize = 62 + 5; // a...z, A...Z, 0..9，多開5格
 const int maxNode = 25 * 25 + 5;
 
@@ -51,12 +53,12 @@ void getFail()
     // root的小孩
     for (int c = 0; c < sigmaSize; ++c)
     {
-        int u = trie[0][c];
+        int v = trie[0][c];
 
-        if (u)
+        if (v)
         {
-            fail[u] = 0; // 指向root
-            q.push(u);
+            fail[v] = 0; // 指向root
+            q.push(v);
         }
     }
 
@@ -70,8 +72,9 @@ void getFail()
         {
             int v = trie[u][c];
 
-            if (!v)
+            if (!v) // 不存在
             {
+                // 路徑壓縮
                 trie[u][c] = trie[fail[u]][c];
                 continue;
             }
@@ -83,7 +86,7 @@ void getFail()
             while (k && !trie[k][c])
                 k = fail[k];
             fail[v] = trie[k][c];
-            // 當前字串的後綴在fail[v]，所以如果fail[v]是禁止出現的，
+            // 當前字串包含著在fail[v]，所以如果fail[v]是禁止出現的，
             // 則v也是不行的(包含pattern)
             match[v] |= match[fail[v]];
         }
@@ -105,10 +108,10 @@ double getProb(int u, int len)
     vis[u][len] = true;
 
     double res = 0;
-    for (int i = 0; i < N; ++i)
+    for (int i = 0; i < N; ++i) // 枚舉每一種字
     {
         // 如果已經包含禁止出現的pattern，則機率為0
-        // 所以這裡只加上沒有出線的機率
+        // 所以這裡只加上沒有出現的機率
         if (!match[trie[u][i]])
             res += prob[i] * getProb(trie[u][i], len - 1);
     }

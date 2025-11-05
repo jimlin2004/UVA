@@ -1,71 +1,112 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// 以下送出還沒過QQ
+/*
+    滾動hash靠運氣
+
+    下方hash是用unsigned long long自動做到 mod 2^64
+
+    正確解法 suffix array + 單調陣列二分搜
+*/
 
 const int maxn = 400005;
-const long long MOD1 = 1e9 + 7;
-const long long MOD2 = 1e9 + 9;
-const long long P1 = 131;
-const long long P2 = 137;
+const unsigned long long P1 = 131;
+const unsigned long long P2 = 137;
 
-// 像prefix一樣index右移1
-long long H1[maxn];
-long long H2[maxn];
-long long powP1[maxn];
-long long powP2[maxn];
-
-struct pair_hash
-{
-    size_t operator()(const pair<long long, long long>& p) const
-    {
-        return p.first * 1000000009LL + p.second;
-    }
-};
+// 由右到左建的hash suffix sum
+unsigned long long H1[maxn];
+unsigned long long H2[maxn];
+unsigned long long powP1[maxn];
+unsigned long long powP2[maxn];
 
 string s;
-unordered_map<pair<long long, long long>, int, pair_hash> mp;
-
 
 void rollingHash(const string& s)
 {
-    H1[0] = 0;
-    H2[0] = 0;
+    int n = s.size();
+
+    H1[n] = 0;
+    H2[n] = 0;
+
+    for (int i = n - 1; i >= 0; --i)
+    {
+        H1[i] = H1[i + 1] * P1 + (s[i] - 'a');
+        H2[i] = H2[i + 1] * P2 + (s[i] - 'a');
+    }
+
     powP1[0] = 1;
     powP2[0] = 1;
 
-    for (int i = 1; i <= s.size(); ++i)
+    for (int i = 1; i <= n; ++i)
     {
-        H1[i] = (H1[i - 1] * P1 % MOD1 + s[i - 1]) % MOD1;
-        H2[i] = (H2[i - 1] * P2 % MOD2 + s[i - 1]) % MOD2; 
-        powP1[i] = (powP1[i - 1] * P1) % MOD1;
-        powP2[i] = (powP2[i - 1] * P2) % MOD2;
+        powP1[i] = powP1[i - 1] * P1;
+        powP2[i] = powP2[i - 1] * P2;
     }
 }
 
-pair<long long, long long> getHash(int l, int r)
+inline pair<unsigned long long, unsigned long long> getHash(int l, int r)
 {
-    long long hash1 = (H1[r] - (H1[l - 1] * powP1[r - l + 1] % MOD1) + MOD1) % MOD1;
-    long long hash2 = (H2[r] - (H2[l - 1] * powP2[r - l + 1] % MOD2) + MOD2) % MOD2;
+    return {
+        H1[l] - H1[r + 1] * powP1[r - l + 1],
+        H2[l] - H2[r + 1] * powP2[r - l + 1]
+    };
+}
 
-    return {hash1, hash2};
-};
+// mp容易發生碰撞
+// int check(int len, int m)
+// {
+//     int last = -1;
+//     mp.clear();
+
+//     for (int i = 0; i < s.size() - len + 1; ++i)
+//     {
+//         int l = i;
+//         int r = i + len - 1;
+
+//         int& cnt = mp[getHash(l, r)];
+//         ++cnt;
+//         if (cnt >= m)
+//         {
+//             last = i;
+//         }
+//     }
+
+//     return last;
+// }
+
+pair<unsigned long long, unsigned long long> ha[maxn];
+int pos[maxn];
 
 int check(int len, int m)
 {
+    if (len == 0)
+        return -1;
+
     int last = -1;
-    mp.clear();
 
     for (int i = 0; i < s.size() - len + 1; ++i)
     {
-        int l = i;
-        int r = i + len - 1;
+        pos[i] = i;
+        ha[i] = getHash(i, i + len - 1);
+    }
 
-        int& cnt = mp[getHash(l + 1, r + 1)];
-        ++cnt;
+    sort(pos, pos + s.size() - len + 1, [](const int a, const int b) {
+        if (ha[a] == ha[b])
+            return a < b;
+        return ha[a] < ha[b];
+    });
+
+    int cnt = 0;
+
+    for (int i = 0; i < s.size() - len + 1; ++i)
+    {
+        if (i == 0 || ha[pos[i]] != ha[pos[i - 1]])
+            cnt = 1;
+        else
+            ++cnt;
         if (cnt >= m)
         {
-            last = i;
+            last = max(last, pos[i]);
         }
     }
 
@@ -84,9 +125,9 @@ int main()
         cin >> s;
 
         rollingHash(s);
-    
-        int res;
-        int l = 0, r = s.size();
+
+        int res = -1;
+        int l = 0, r = s.size() + 1;
 
         while (l + 1 < r)
         {

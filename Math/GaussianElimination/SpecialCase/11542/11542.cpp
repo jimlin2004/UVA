@@ -17,7 +17,7 @@ using namespace std;
     x_4代表選或不選15
     以此類推，x_1 、 x_2 、 x_3 、 x_4...只可能是 0 or 1
     也就是 (4**x_1) * (6**x_2) * (10**x_3) * (15**x_4) = (某一數)**2
-    寫作 [(2 * 2) ** x_1] [(2 * 3)**x_2] * [(2 * 5)**x_3] * [(3 * 5)**x_4] = (某一數)**2
+    寫作 [(2 * 2)**x_1] [(2 * 3)**x_2] * [(2 * 5)**x_3] * [(3 * 5)**x_4] = (某一數)**2
     要是某一數的平方，質因數的指數必須是even
     也就是
     (2)的指數 2x_1 + x_2 + x_3 = even
@@ -69,6 +69,7 @@ void getPrimes()
 
 int gaussian_elimination(int m, int n)
 {
+    // i -> 處理到第幾個row，j -> 處理到第幾個col
     int i, j, k, r;
     i = j = 0;
     while (i < m && j < n)
@@ -96,15 +97,16 @@ int gaussian_elimination(int m, int n)
             //進行高斯消去
             for (int u = i + 1; u < m; ++u)
             {
+                // 將第i row往下消去其他row
                 if (A[u][j])
                 {
                     for (k = i; k < n; ++k)
                         A[u][k] ^= A[i][k];
                 }
             }
-            ++i;
+            ++i; // 換下一個row
         }
-        ++j;
+        ++j; // 換下一個col
     }
     //free-variable數量
     return n - i;
@@ -113,6 +115,7 @@ int gaussian_elimination(int m, int n)
 int main()
 {
     getPrimes();
+
     int t;
     scanf("%d", &t);
     while (t--)

@@ -57,7 +57,7 @@ public:
     void build()
     {
         queue<int> q;
-        // root額外處理
+        // root的小孩額外處理
         for (int ch = 0; ch < 26; ++ch)
         {
             int v = trie[0].child[ch];
@@ -69,7 +69,7 @@ public:
             }
             else
             {
-                trie[0].child[ch] = 0; //該節點不存在就指向root
+                trie[0].child[ch] = 0; //該節點不存在就指向root，做路徑壓縮
             }
         }
 
@@ -97,7 +97,7 @@ public:
                 }
                 else
                 {
-                    // 沒有邊就指向fail[u]的邊
+                    // 沒有邊就指向fail[u]的邊，做路徑壓縮
                     trie[u].child[ch] = trie[trie[u].fail].child[ch];
                 }
             }
@@ -115,7 +115,7 @@ public:
             // 自己這個點的pattern
             for (int id: trie[u].patternIDs)
                 ++cnt[id];
-            // 用last找回去
+            // 用last往回跳鍊
             for (int fail = trie[u].last; fail != 0; fail = trie[fail].last)
             {
                 for (int id: trie[fail].patternIDs)

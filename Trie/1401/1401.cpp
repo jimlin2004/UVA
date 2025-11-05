@@ -8,11 +8,11 @@ int trie[4005 * 105][30];
 bool isWord[4005 * 105]; // 該節點是不是字串結尾
 
 /*
-    dp[i] -> dp[i ~ n]有幾種組合方式
+    dp[i] -> i ~ n有幾種組合方式
 
     計算轉移式的概念是
     從後面開始枚舉i的時候
-    在枚舉i ~ n之間的j
+    再枚舉i ~ n之間的j
     此時如果i ~ j是一個題目給的pattern
     那麼dp[i] += dp[j + 1]
     也就是i ~ j的pattern一種方法 乘上 dp[j + 1] (也就是 j + 1 ~ n有幾種組法)
@@ -40,14 +40,14 @@ void insert(string& str)
     isWord[curr] = true;
 }
 
-// 利用trie，可以一次找完 i ~ n的組合方式
-long long query(string& str, int j)
+// 利用trie，可以一次找完 i ~ n 的組合方式
+long long query(string& str, int i)
 {
     long long cnt = 0;
     int curr = 1;
-    for (int i = j; i < str.size(); ++i)
+    for (int j = i; j < str.size(); ++j)
     {
-        char c = str[i] - 'a';
+        char c = str[j] - 'a';
 
         if (trie[curr][c] == 0)
             break;
@@ -56,7 +56,7 @@ long long query(string& str, int j)
         // 是一個pattern的結尾，就有了一種可能的切法
         if (isWord[curr])
         {
-            cnt += dp[i + 1];
+            cnt += dp[j + 1];
             cnt %= MOD;
         }
     }
