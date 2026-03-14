@@ -31,7 +31,7 @@ bool check(int maxLen, int N, int D)
             {
                 ++i;
             }
-            else if (stones[i].pos - prev <= maxLen) // 能到最遠才跳就到最遠那顆
+            else if (stones[i].pos - prev <= maxLen) // 能到最遠才跳就到最遠那顆，讓後面盡可能小於maxLen
             {
                 last = i;
                 ++i;

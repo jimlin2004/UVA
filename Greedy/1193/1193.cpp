@@ -60,7 +60,7 @@ int main()
             // 該點p(x, y)到x軸的垂直距離是y，
             // 最遠與x軸的距離為d
             // 所以可以利用畢氏定理
-            // 求出該交點區間為 d - sqrt(d^2 - y^2) ~ d + sqrt(d^2 - y^2)
+            // 求出該交點區間為 x - sqrt(d^2 - y^2) ~ x + sqrt(d^2 - y^2)
             // 看推導.png
             double dx = sqrt(d * d - islands[i].y * islands[i].y);
             segs[i].l = islands[i].x - dx;;

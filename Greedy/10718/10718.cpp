@@ -4,7 +4,7 @@ using namespace std;
 /*
     題意:
         給定N, L, U
-        找L <= M <= U中 N | M可以得到最大值的M
+        找L <= M <= U中 N | M 可以得到最大值的M
         若有多個M則取最小的M
 
     貪婪

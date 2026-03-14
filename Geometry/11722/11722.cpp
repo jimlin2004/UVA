@@ -34,7 +34,7 @@ using namespace std;
     (看推導2 ~ 8.png)
 
     簡化處理，
-    碰面區域面積 就是 x -y-w=0 的左上矩形面積 - x-y+w=0的左上方矩形面積
+    碰面區域面積 就是 x-y-w=0 的左上矩形面積 - x-y+w=0 的左上方矩形面積
 
     此時問題剩下一條斜率=1的直線的左上矩形面積
     一樣有多種狀況要討論
@@ -49,8 +49,6 @@ double width, height;
 // 求直線x-y+w=0左上平面與矩形(s1, t1) ~ (s2, t2)的相交面積
 double getArea(double w)
 {
-
-
     // 下方四點是帶入直線方程式求得
     double ly = t1 + w;
     double ry = t2 + w;
