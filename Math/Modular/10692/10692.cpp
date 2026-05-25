@@ -29,7 +29,7 @@ long long phi(long long x)
 
 long long qpow(long long a, long long b, long long mod)
 {
-    long long res = 1;
+    long long res = 1 % mod;
 
     while (b > 0)
     {

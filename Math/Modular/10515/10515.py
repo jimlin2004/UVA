@@ -16,4 +16,4 @@ while (1):
     if (m == 0 and n == 0):
         break
 
-    print(pow(m, n, 10))
+    print(pow(m, n, mod=10))

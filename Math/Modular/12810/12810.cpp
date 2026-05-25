@@ -74,7 +74,7 @@ int main()
     // 費馬小定理: a^(p - 1) % P = 1 % P when p is prime
     // 1000000009是已知prime，所以可以用
     // a^(p - 1) x a^{-1} % P = a^{-1} % P
-    // -> a^{-1} % P = a^{p - 2}
+    // -> a^{-1} % P = a^{p - 2} % P
     // 轉由快速冪求答案
     const long long two_inv = qpow(2, MOD - 2, MOD);
 

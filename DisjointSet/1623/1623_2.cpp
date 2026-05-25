@@ -21,6 +21,7 @@ int parent[maxn];
 // 天氣預報
 int predicted[maxn];
 
+// 在這題的用法中，findRoot(x)可以當作找第x天以後(包含)最近沒下雨的是哪一天
 int findRoot(int x)
 {
     if (parent[x] == x)
@@ -75,9 +76,10 @@ int main()
                 res[noRainDay] = predicted[i];
                 // 湖被重新填滿
                 lastFullDay[predicted[i]] = i;
-                // 因為noRainDay被用掉了，所以這個DSU要全部往後一
+                // 因為noRainDay被用掉了，所以這個DSU要全部往後移
                 // 概念是noRainDay不下雨的第一天就是findRoot(noRainDay + 1)的那一天(因為我們貪婪地由右往左建DSU)
-                // 上面這一步利用了DSU快速修正區間的優勢
+                // 也就是因為noRainDay被用掉之後，下個最近沒下雨的天至少是一天後，所以直接用findRoot(noRainDay + 1)去找即可
+                // 利用了DSU快速修正區間的優勢
                 parent[noRainDay] = findRoot(noRainDay + 1);
             }
         }

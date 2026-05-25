@@ -29,14 +29,14 @@ bool used[15];
 vector<int> remains;
 
 // 長除法
-int getRemain(int q, string& p)
+int getRemain(string& p, int q)
 {
     // 長除法裡目前的數字
     int curr = 0;
 
     for (int i = 0; i < p.size(); ++i)
     {
-        // 就跟長除法一樣，每次先 x 10 加上新的一個數字
+        // 就跟長除法一樣，每次先 x 10 再加上新的一個數字
         curr = curr * 10 + p[i] - '0';
 
         // 只要管餘數
@@ -55,6 +55,7 @@ int main()
 
         if (m == "0" && n == "0")
             break;
+        // 0次方要特判
         if (n == "0")
         {
             puts("1");
@@ -72,7 +73,7 @@ int main()
             curr = curr * (m[0] - '0') % 10;
         }
 
-        printf("%d\n", remains[getRemain(remains.size(), n) - 1]);
+        printf("%d\n", remains[getRemain(n, remains.size()) - 1]);
     }
 
     return 0;

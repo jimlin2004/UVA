@@ -47,7 +47,7 @@ bool dfs(int depth)
         if (pathNodes[depth + 1] <= 1000 && dfs(depth + 1))
             return true;
         
-        // 下一層試試看用 x^(pathNodes[depth] + pathNodes[i])的
+        // 下一層試試看用 x^(pathNodes[depth] - pathNodes[i])的
         pathNodes[depth + 1] = pathNodes[depth] - pathNodes[i];
         // 題目說過程中不能有負的冪次，也算是剪枝
         if (pathNodes[depth + 1] >= 0 && dfs(depth + 1))
@@ -86,5 +86,3 @@ int main()
     return 0;
 }
 
-/*
-*/

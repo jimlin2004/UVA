@@ -78,7 +78,7 @@ int main()
                 ++LStop;
             int vL = (LStop - LCenterBound) * H * 2;
 
-            // 右邊不一定流滿，所以用min(vL, vR)
+            // 左邊不一定流滿，所以用min(vL, vR)
             totalTime = vR + vCenter + min(vL, vR);
         }
         else if (LH < RH) // 最後是左邊溢出
@@ -93,7 +93,7 @@ int main()
                 ++RStop;
             int vR = (RStop - RCenterBound) * H * 2;
 
-            // 左邊不一定流滿，所以用min(vL, vR)
+            // 右邊不一定流滿，所以用min(vL, vR)
             totalTime = vL + vCenter + min(vL, vR);
         }
         else // 兩邊一樣高
