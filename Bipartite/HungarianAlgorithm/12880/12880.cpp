@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstring>
 
+// 就是求二分圖最大匹配數是不是全匹配，但是其實用二分圖最大匹配有點碰運氣，正確應該用最大流應該比較快
+
 bool line[10005][10005] = {false};
 bool used[10005] = {false};
 int match[10005];
